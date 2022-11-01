@@ -7,13 +7,22 @@ app.get('/cat', (req, res) => {
   res.send('From this endpoint you can get cats.')
 });
 
+app.get('/cat/:catId', (req, res) => {
+  console.log(req.params);
+  res.send('From this endpoint you can get a cat with id ' + req.params.catId + '.')
+});
+
 app.post('/cat', (req, res) => {
-  console.log(req);
   res.send('From this endpoint you can add more cats.')
 });
 
-app.put('TODO');
-app.delete('TODO');
+app.put('/cat', (req, res) => {
+  res.send('From this endpoint you can edit cats.')
+});
+
+app.delete('/cat', (req, res) => {
+  res.send('From this endpoint you can delete cats')
+});
 
 app.get('/user', (req, res) => {
   res.send('From this endpoint you can get users.')
