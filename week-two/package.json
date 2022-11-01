@@ -1,17 +1,16 @@
 {
-  "name": "server-one",
+  "name": "bcwt-week2",
   "version": "1.0.0",
-  "description": "First node app with express.js",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "darjapo",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "pug": "^3.0.2"
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

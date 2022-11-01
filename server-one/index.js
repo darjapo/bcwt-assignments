@@ -21,10 +21,21 @@ app.get('/catinfo', (req, res) => {
     res.json(cat)
 })
 
+app.use(express.static('public'))
+app.set('view engine', 'pug')
+
 app.get('/test', (request, response) => {
     console.log('Someone is trying to test me')
     requestCounter++
-    response.send('<h1>TEST PAGE</h1><p>'+ requestCounter +'</p>')
+    // Pug html implementation
+    response.render('test', {
+        tittle: "Pug test page",
+        header1: "Pug test page",
+        header2: "Counter",
+        exampleText: "Page requested " + requestCounter + " times.",
+    })
+    // basic html as string
+    //response.send('<h1>TEST PAGE</h1><p>'+ requestCounter +'</p>')
 })
 
 app.listen(port, () => {
