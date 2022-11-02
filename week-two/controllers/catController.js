@@ -4,7 +4,8 @@
 
     const cats = catModel.cats;
 
-    const getCats = (req, res) => {
+    const getCats = async (req, res) => {
+        const cats = await catModel.getAllCats();
         res.json(cats);
     };
 
