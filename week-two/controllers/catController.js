@@ -23,7 +23,7 @@
     };
 
     const createCat = (req, res) => {
-
+        res.send('Creating a cat');
     };
 
     const deleteCat = (req, res) => {
