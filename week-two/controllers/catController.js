@@ -9,9 +9,9 @@
         res.json(cats);
     };
 
-    const getCat = (req, res) => {
+    const getCat = async (req, res) => {
         // chooses one object of an array with matching Id
-        const cat = cats.filter(cat => req.params.catId == cat.id)[0];
+        const cat = await catModel.getACatById(res, req.params.catId);
         if (cat) {
             res.json(cat);
         } else {
