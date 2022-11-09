@@ -18,8 +18,17 @@
         };
     };
 
-    const modifyCat = (req, res) => {
-
+    const modifyCat = async (req, res) => {
+        const cat = req.body;
+        if (req.params.catId) {
+            cat.id = req.params.catId;
+        };
+        const result = await catModel.updateCatById(cat, res);
+        if (result.affectedRows > 0) {
+            res.json({message: 'cat modified', catId: cat.id});
+        } else {
+            res.status(404).json({message: 'cat was not changed'});
+        }
     };
 
     const createCat = async (req, res) => {
@@ -31,7 +40,7 @@
     };
 
     const deleteCat = async (req, res) => {
-        const result = await catModel.deleteACatById(req.params.catId, res);
+        const result = await catModel.deleteCatById(req.params.catId, res);
         console.log('cat deleted', result)
         if (result.affectedRows > 0) {
             res.json({message: 'cat deleted'});
