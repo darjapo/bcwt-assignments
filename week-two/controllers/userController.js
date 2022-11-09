@@ -2,36 +2,30 @@
 // catController
 const userModel = require('../models/userModel');
 
-const users = userModel.users;
-
 const getUsers = async (req, res) => {
-    const users = await userModel.getAllUsers();
-    users.map(user => {
-        delete user.password;
-        return user;
-    });
+    const users = await userModel.getAllUsers(res);
     res.json(users);
 };
 
 const getUser = async (req, res) => {
     // chooses one object of an array with matching Id
-    const user = await userModel.getAUserById(res, req.params.userId);
-    if (user) {
-        delete user.password;
-        res.json(user);
-    } else {
+    try {
+        const user = await userModel.getAUserById(res, req.params.userId);
+        res.json(user)
+    } catch (e) {
         res.sendStatus(404);
-    };
+    }
 };
 
 const modifyUser = (req, res) => {
 
 };
 
-const createUser = (req, res) => {
-    //console.log(req.body);
-    const userInfo = `username: ${req.body.name}, email: ${req.body.email}`;
-    res.send('Adding new user ' + userInfo);
+const createUser = async (req, res) => {
+    console.log('Creating a new user:', req.body);
+    const newUser = req.body;
+    const result = await userModel.addUser(newUser, res);
+    res.status(201).json({userId: result});
 };
 
 const deleteUser = (req, res) => {

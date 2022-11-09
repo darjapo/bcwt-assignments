@@ -10,6 +10,9 @@ app.use(cors());
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+// serve upload files
+app.use(express.static('uploads'));
+
 app.use('/cat', catRouter);
 app.use('/user', userRouter);
 
