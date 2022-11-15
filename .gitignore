@@ -1,5 +1,5 @@
 node_modules/
 .idea/
-week-two/uploads/*
-!week-two/uploads/.gitkeep
+server/uploads/*
+!server/uploads/.gitkeep
 .env
