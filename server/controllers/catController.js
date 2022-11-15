@@ -1,9 +1,11 @@
 'use strict';
 // catController
-    const {rawListeners} = require('../database/db');
-    const catModel = require('../models/catModel');
+const {rawListeners} = require('../database/db');
+const catModel = require('../models/catModel');
+const {validationResult} = require('express-validator');
+const {ignore} = require("nodemon/lib/rules");
 
-    const getCats = async (req, res) => {
+const getCats = async (req, res) => {
         const cats = await catModel.getAllCats();
         res.json(cats);
     };
@@ -32,11 +34,19 @@
     };
 
     const createCat = async (req, res) => {
-        const newCat = req.body;
-        newCat.filename = req.file.filename;
-        console.log('Creating a new user:', newCat);
-        const catId = await catModel.addCat(newCat, res);
-        res.status(201).json({catId});
+        const errors = validationResult(req);
+        if (errors.isEmpty()) {
+            const newCat = req.body;
+            newCat.filename = req.file.filename;
+            console.log('Creating a new user:', newCat);
+            const catId = await catModel.addCat(newCat, res);
+            res.status(201).json({catId});
+        } else {
+            res.status(400).json({
+                message: 'cat creation failed',
+                errors: errors.array()
+            });
+        }
     };
 
     const deleteCat = async (req, res) => {
