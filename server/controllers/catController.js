@@ -35,6 +35,11 @@ const getCats = async (req, res) => {
 
     const createCat = async (req, res) => {
         const errors = validationResult(req);
+        // if file is missing (not passing melter's fileFilter in route)
+        if (!req.file) {
+            res.status(400).json({message: 'file missing or invalid'});
+        };
+
         if (errors.isEmpty()) {
             const newCat = req.body;
             newCat.filename = req.file.filename;
