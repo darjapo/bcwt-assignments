@@ -6,14 +6,17 @@ const multer = require('multer')
 const {body} = require('express-validator');
 
 const catController = require('../controllers/catController');
-const userController = require("../controllers/userController");
 
 const fileFilter = (req, file, cb) => {
+    // The function should call `cb` with a boolean
+    // to indicate if the file should be accepted
     const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    if (acceptedTypes.includes(file.mimeType)) {
-        cb(null, true)
+    if (acceptedTypes.includes(file.mimetype)) {
+        // To accept the file pass `true`, like so:
+        cb(null, true);
     } else {
-        cb(null, false)
+        // To reject this file pass `false`, like so:
+        cb(null, false);
     }
 };
 
