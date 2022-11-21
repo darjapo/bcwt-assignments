@@ -1,10 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Mouse trail</title>
 </head>
 <body>
-$END$
+
+    <style>
+        .trail { /* className for the trail elements */
+            position: absolute;
+            height: 6px; width: 6px;
+            border-radius: 3px;
+            background: teal;
+        }
+        body {
+            height: 300px;
+        }
+    </style>
+
+    <script>
+        const dots = [];
+
+        function divCreation() {
+            const body = document.querySelector('body');
+
+            for (let i=0; i<=10; i++) {
+                const div = document.createElement('div');
+                div.className = 'trail';
+                body.appendChild(div);
+                dots.push(div);
+            };
+        };
+
+        divCreation();
+
+        let dotNumber = 0;
+
+        function mousemove(event) {
+            const x = event.pageX;
+            const y = event.pageY;
+            let dot = dots[dotNumber];
+
+            dot.style.left = x + "px";
+            dot.style.top = y + "px";
+            dotNumber = (dotNumber + 1) % dots.length;
+        };
+
+        window.addEventListener('mousemove', mousemove);
+
+    </script>
+
 </body>
 </html>

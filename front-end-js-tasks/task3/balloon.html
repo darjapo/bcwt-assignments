@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Balloon</title>
 </head>
 <body>
+
+    <p>🎈</p>
+
+    <script>
+        const p = document.querySelector('p');
+        let fontSize = p.style.fontSize = '10rem';
+
+        window.addEventListener('keydown', balloonResizing);
+
+        function balloonResizing(event) {
+            if (event.key == 'ArrowUp') {
+                fontSize = fontSize.replace('rem', '') * 1.1 + 'rem';
+                if (fontSize.replace('rem', '') >= 40) {
+                    p.textContent = '💥';
+                    removeListener();
+                };
+            } else if (event.key == 'ArrowDown') {
+                fontSize = fontSize.replace('rem', '') * 0.9 + 'rem';
+            };
+            p.style.fontSize = fontSize;
+            event.preventDefault();
+        };
+
+        function removeListener() {
+            window.removeEventListener('keydown', balloonResizing);
+        }
+
+    </script>
 
 </body>
 </html>

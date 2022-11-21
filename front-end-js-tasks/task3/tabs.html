@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Tabs</title>
 </head>
 <body>
-$END$
+
+<tab-panel>
+  <div data-tabname="one">Tab one</div>
+  <div data-tabname="two">Tab two</div>
+  <div data-tabname="three">Tab three</div>
+</tab-panel>
+<script>
+  function asTabs(node) {
+
+    const tabs = Array.from(node.children).map(node => {
+      const button = document.createElement('button');
+      button.textContent = node.getAttribute('data-tabname');
+      const tab = {node, button};
+      button.addEventListener('click', () => selectTab(tab));
+      return tab;
+    });
+
+    const tabList = document.createElement('div');
+
+    for (let {button} of tabs) {
+      tabList.appendChild(button);
+    }
+    node.insertBefore(tabList, node.firstElementChild);
+
+    function selectTab(selectedTab) {
+        for (let tab of tabs) {
+            const selected = tab === selectedTab;
+            if (selected) {
+                tab.node.style.display = '';
+                tab.button.style.color = 'green';
+            } else {
+                tab.node.style.display = 'none';
+                tab.button.style.color = '';
+            };
+        };
+    };
+
+    selectTab(tabs[0]);
+  }
+  asTabs(document.querySelector("tab-panel"));
+</script>
+
 </body>
 </html>

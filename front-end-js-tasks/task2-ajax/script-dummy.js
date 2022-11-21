@@ -15,5 +15,5 @@ const getData = async () => {
 };
 
 getData();
-figCaptionElem.innerText = "this is f igcaption.";
+figCaptionElem.innerText = "this is figcaption.";
 console.log("last line of code");

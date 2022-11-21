@@ -23,12 +23,32 @@ const renderResults = (data) => {
     for (let i=0; i<data.length; i++) {
         const h3 = document.createElement('h3');
         h3.textContent = data[i].show.name;
+
         const img = document.createElement('img');
-        // TODO: show default image if there is no in json
-        img.src = data[i].show.image?.medium;
-        results.append(h3);
-        results.append(img);
-        // TODO: render more data from the results
+        if (data[i].show.image != null) {
+            img.src = data[i].show.image.medium
+        } else {
+            img.src = 'http://placekitten.com/200/300'
+        }
+
+        const pSum = document.createElement('p');
+        pSum.innerHTML = "<b> Summary: </b>" + data[i].show.summary;
+
+        const pOfSite = document.createElement('p');
+        if (data[i].show.officialSite != null) {
+            pOfSite.innerHTML = "<b> Official site: </b>" + data[i].show.officialSite;
+        } else {
+            pOfSite.innerHTML = "<b> Official site: </b> Sorry, there is no official site for this show!";
+        }
+
+        const genres = document.createElement('p');
+        if (data[i].show.genres.length !== 0) {
+            genres.innerHTML = "<b> Genres: </b>" + data[i].show.genres.join('|');
+        } else {
+            genres.innerHTML = "<b> Genres: </b> Sorry, there are no genres for this show!";
+        }
+
+        results.append(h3, img, pSum, pOfSite, genres);
     };
 };
 
