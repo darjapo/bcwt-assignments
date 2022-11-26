@@ -40,6 +40,7 @@ const getCats = async (req, res) => {
             res.status(400).json({message: 'file missing or invalid'});
         } else if (errors.isEmpty()) {
             const newCat = req.body;
+            newCat.owner = req.user.user_id;
             newCat.filename = req.file.filename;
             console.log('Creating a new user:', newCat);
             const catId = await catModel.addCat(newCat, res);
@@ -53,12 +54,12 @@ const getCats = async (req, res) => {
     };
 
     const deleteCat = async (req, res) => {
-        const result = await catModel.deleteCatById(req.params.catId, res);
+        const result = await catModel.deleteCatById(req.params.catId, req.user.user_id, res);
         console.log('cat deleted', result)
         if (result.affectedRows > 0) {
             res.json({message: 'cat deleted'});
         } else {
-            res.status(404).json({message: 'cat was already deleted'});
+            res.status(404).json({message: 'cat delete failed'});
         }
     };
 

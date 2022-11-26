@@ -18,10 +18,6 @@ const getUser = async (req, res) => {
     }
 };
 
-const modifyUser = (req, res) => {
-
-};
-
 const createUser = async (req, res) => {
     console.log('Creating a new user:', req.body);
     const newUser = req.body;
@@ -46,10 +42,19 @@ const deleteUser = (req, res) => {
 
 };
 
+const modifyUser = (req, res) => {
+
+};
+
+const checkToken = (req, res) => {
+  res.json({user: req.user});
+};
+
 module.exports = {
     getUser,
     getUsers,
-    modifyUser,
     createUser,
-    deleteUser
+    deleteUser,
+    modifyUser,
+    checkToken
 };
