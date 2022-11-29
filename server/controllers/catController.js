@@ -20,19 +20,6 @@ const getCats = async (req, res) => {
         };
     };
 
-    const modifyCat = async (req, res) => {
-        const cat = req.body;
-        if (req.params.catId) {
-            cat.id = req.params.catId;
-        };
-        const result = await catModel.updateCatById(cat, res);
-        if (result.affectedRows > 0) {
-            res.json({message: 'cat modified', catId: cat.id});
-        } else {
-            res.status(404).json({message: 'cat was not changed'});
-        }
-    };
-
     const createCat = async (req, res) => {
         const errors = validationResult(req);
         // if file is missing (not passing multer's fileFilter in route)
@@ -54,12 +41,25 @@ const getCats = async (req, res) => {
     };
 
     const deleteCat = async (req, res) => {
-        const result = await catModel.deleteCatById(req.params.catId, req.user.user_id, res);
+        const result = await catModel.deleteCatById(req.params.catId, req.user.user_id, req.user.role, res);
         console.log('cat deleted', result)
         if (result.affectedRows > 0) {
             res.json({message: 'cat deleted'});
         } else {
             res.status(404).json({message: 'cat delete failed'});
+        }
+    };
+
+    const modifyCat = async (req, res) => {
+        const cat = req.body;
+        if (req.params.catId) {
+            cat.id = req.params.catId;
+        };
+        const result = await catModel.updateCatById(cat, req.user.user_id, req.user.role, res);
+        if (result.affectedRows > 0) {
+            res.json({message: 'cat modified', catId: cat.id});
+        } else {
+            res.status(404).json({message: 'cat was not changed'});
         }
     };
 
