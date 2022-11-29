@@ -2,4 +2,6 @@ node_modules/
 .idea/
 server/uploads/*
 !server/uploads/.gitkeep
+server/thumbnails/*
+!server/thumbnails/.gitkeep
 .env
