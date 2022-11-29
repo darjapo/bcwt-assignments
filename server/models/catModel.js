@@ -61,7 +61,7 @@ const updateCatById = async (cat, owner, role, res) => {
     if (role === 0) {
       const sql = 'UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ?';
       const values = [cat.name, cat.weight, cat.birthdate, cat.id];
-      const [rows] = await promisePool.query(sql, values);
+      const [rows] = await promisePool.query(sql, values)
       return rows;
     } else {
       const sql = 'UPDATE wop_cat SET name = ?, weight = ?, birthdate = ? WHERE cat_id = ? AND owner = ?';

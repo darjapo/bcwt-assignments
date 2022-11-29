@@ -1,5 +1,4 @@
 'use strict';
-// catController
 const userModel = require('../models/userModel');
 const {validationResult} = require('express-validator');
 
@@ -9,11 +8,11 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-    // chooses one object of an array with matching Id
-    try {
-        const user = await userModel.getAUserById(res, req.params.userId);
-        res.json(user)
-    } catch (e) {
+    // choose only one object with matching id
+    const user = await userModel.getUserById(req.params.userId, res);
+    if (user) {
+        res.json(user);
+    } else {
         res.sendStatus(404);
     }
 };
@@ -35,26 +34,26 @@ const createUser = async (req, res) => {
             message: 'user creation failed',
             errors: errors.array()
         });
-    };
-};
-
-const deleteUser = (req, res) => {
-
+    }
 };
 
 const modifyUser = (req, res) => {
-
+    // TODO: add functionality & data model
 };
-
+const deleteUser = (req, res) => {
+    // TODO: add functionality & data model
+};
 const checkToken = (req, res) => {
-  res.json({user: req.user});
+    delete req.user.password;
+    res.json({user: req.user});
 };
+
 
 module.exports = {
     getUser,
     getUsers,
+    modifyUser,
     createUser,
     deleteUser,
-    modifyUser,
-    checkToken
+    checkToken,
 };
