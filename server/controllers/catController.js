@@ -1,9 +1,8 @@
 'use strict';
-// catController
-const {rawListeners} = require('../database/db');
 const catModel = require('../models/catModel');
 const {validationResult} = require('express-validator');
 const {ignore} = require("nodemon/lib/rules");
+const { makeThumbnail } = require("../utils/image");
 
 const getCats = async (req, res) => {
         const cats = await catModel.getAllCats();
@@ -26,6 +25,9 @@ const getCats = async (req, res) => {
         if (!req.file) {
             res.status(400).json({message: 'file missing or invalid'});
         } else if (errors.isEmpty()) {
+            await makeThumbnail(req.file.path, req.file.filename);
+            // TODO: use image.js/getCoord to extract exif-data/gps coords and
+            // add to the cat object as vat.coords property in array format (stringified)
             const newCat = req.body;
             newCat.owner = req.user.user_id;
             newCat.filename = req.file.filename;
