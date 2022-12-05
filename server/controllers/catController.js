@@ -32,7 +32,7 @@ const getCats = async (req, res) => {
             newCat.coords = JSON.stringify(await getCoordinates(req.file.path));
             newCat.owner = req.user.user_id;
             newCat.filename = req.file.filename;
-            console.log('Creating a new user:', newCat);
+            console.log('Creating a new cat:', newCat);
             const catId = await catModel.addCat(newCat, res);
             res.status(201).json({catId});
         } else {
